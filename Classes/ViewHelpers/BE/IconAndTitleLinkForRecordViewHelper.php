@@ -56,7 +56,7 @@ class IconAndTitleLinkForRecordViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelp
 		if (is_array($record)) {
 			$icon = $this->iconFactory->getIconForRecord($tableName, $record, Icon::SIZE_SMALL)->render();
 			if ($this->getBackendUser()->recordEditAccessInternals($tableName, $record)) {
-				$icon = $this->getPageLayoutController()->doc->wrapClickMenuOnIcon($icon, $tableName, $record['uid'], 1, '', '+copy,info,edit,view');
+				$icon = $this->getPageLayoutController()->getModuleTemplate()->wrapClickMenuOnIcon($icon, $tableName, $record['uid'], 1, '', '+copy,info,edit,view');
 			}
 			$link = $this->linkEditContent(htmlspecialchars(BackendUtility::getRecordTitle($tableName, $record)), $record);
 			$shortcutContent = $icon . $link;
