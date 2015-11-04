@@ -70,9 +70,6 @@ class LanguagesProcessor implements DataProcessorInterface {
 		$flagIconPath = $processorConfiguration['flagIconPath'];
 		$flagIconFileExtension = $processorConfiguration['flagIconFileExtension'];
 
-        foreach ($isoCodes as $isoCode) {
-            $languages[$isoCode] = $languageService->sL('LLL:EXT:core/Resources/Private/Language/db.xlf:sys_language.language_isocode.' . $isoCode);
-        }
         if (!empty($availableLanguages)) {
 			foreach ($availableLanguages as $languageUid) {
 
