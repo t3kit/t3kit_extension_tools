@@ -28,8 +28,18 @@ use TYPO3\CMS\Backend\Utility\BackendUtility;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 class RecordsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-	
-/**
+
+	/**
+     * Initialize ViewHelper arguments
+     *
+     * @return void
+     */
+    public function initializeArguments()
+    {
+        $this->registerArgument('flexform2array', '', 'Do convert flexform to array', false);
+    }
+
+	/**
 	 * Fetches tt_content records and returns them in an array
 	 *
 	 * @param string   $recordList     List of uids to fetch
@@ -44,6 +54,11 @@ class RecordsViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHel
                 $tableName = empty($split[0]) ? 'tt_content' : $split[0];
                 $shortcutRecord = BackendUtility::getRecord($tableName, $split[1]);
                 if (is_array($shortcutRecord)) {
+					if ($this->arguments['flexform2array']) {
+						// parse flexform
+						$flexformService = GeneralUtility::makeInstance('TYPO3\\CMS\\Extbase\\Service\\FlexFormService');
+						$shortcutRecord['pi_flexform'] = $flexformService->convertFlexFormContentToArray($shortcutRecord['pi_flexform']);
+					}
                     $records[] = $shortcutRecord;
                 }
             }
