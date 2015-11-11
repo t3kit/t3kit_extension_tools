@@ -71,7 +71,7 @@ class IconAndTitleLinkForRecordViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelp
 		}
 		// Return link
 		return $onClick ? '<a href="#" onclick="' . htmlspecialchars($onClick)
-			. '" title="' . $this->getLanguageService()->getLL('edit', TRUE) . '">' . $str . '</a>' . $addButton : $str;
+			. '" title="' . $this->getLanguageService()->getLL('edit', TRUE) . '">&nbsp;' . $str . '</a>' . $addButton : $str;
 	}
 
 	/**
