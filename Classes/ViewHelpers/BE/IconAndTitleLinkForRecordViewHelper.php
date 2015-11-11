@@ -3,8 +3,7 @@ namespace T3kit\T3kitExtensionTools\ViewHelpers\Be;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
-use TYPO3\CMS\Core\Imaging\Icon;
-use TYPO3\CMS\Core\Imaging\IconFactory;
+use TYPO3\CMS\Backend\Utility\IconUtility;
 
 /***************************************************************
  *
@@ -31,17 +30,6 @@ use TYPO3\CMS\Core\Imaging\IconFactory;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 class IconAndTitleLinkForRecordViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-		/**
-	 * @var IconFactory
-	 */
-	protected $iconFactory;
-
-	/**
-	 * Construct to initialize class variables.
-	 */
-	public function __construct() {
-		$this->iconFactory = GeneralUtility::makeInstance(IconFactory::class);
-	}
 
 	/**
 	 * Iterates through elements of $each and renders child nodes
@@ -54,12 +42,13 @@ class IconAndTitleLinkForRecordViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelp
 		$shortcutContent = '';
 		$tableName = 'tt_content';
 		if (is_array($record)) {
-			$icon = $this->iconFactory->getIconForRecord($tableName, $record, Icon::SIZE_SMALL)->render();
+			$altText = BackendUtility::getRecordIconAltText($record, $tableName);
+			$iconImg = IconUtility::getSpriteIconForRecord($tableName, $record, array('title' => $altText));
 			if ($this->getBackendUser()->recordEditAccessInternals($tableName, $record)) {
-				$icon = $this->getPageLayoutController()->getModuleTemplate()->wrapClickMenuOnIcon($icon, $tableName, $record['uid'], 1, '', '+copy,info,edit,view');
+				$iconImg = BackendUtility::wrapClickMenuOnIcon($iconImg, $tableName, $record['uid'], 1, '', '+copy,info,edit,view');
 			}
 			$link = $this->linkEditContent(htmlspecialchars(BackendUtility::getRecordTitle($tableName, $record)), $record);
-			$shortcutContent = $icon . $link;
+			$shortcutContent = $iconImg . $link;
 		}
 		return $shortcutContent;
 	}
