@@ -35,7 +35,7 @@ use \TYPO3\CMS\Core\Utility\StringUtility;
 /**
  * Renders
  *
- * @package	t3kitEztensionTools
+ * @package t3kitEztensionTools
  * @subpackage UserFunction
  */
 class IconFontSelector {
@@ -45,7 +45,7 @@ class IconFontSelector {
      * @var array
      */
     protected $cssFileInformation;
-    
+
     /**
      * Array to store what items to output
      * @var array
@@ -57,13 +57,13 @@ class IconFontSelector {
      * @var string
      */
     protected $fontPrefix = 'icon-';
-    
+
     /**
      * String fontSize
      * @var string
      */
     protected $fontSize = '20px';
-    
+
     /**
      * String selectedIconClass
      * @var string
@@ -76,19 +76,19 @@ class IconFontSelector {
      */
     protected $icoMoonSelectionJsonFileName = 'selection.json';
 
-	/**
-	 * @param array $PA
-	 * @param TYPO3\CMS\Backend\Form\Element\UserElement $pObj
-	 * @return string
-	 */
-	public function renderField(array $PA, \TYPO3\CMS\Backend\Form\Element\UserElement $pObj) {
+    /**
+     * @param array $PA
+     * @param TYPO3\CMS\Backend\Form\Element\UserElement $pObj
+     * @return string
+     */
+    public function renderField(array $PA, \TYPO3\CMS\Backend\Form\Element\UserElement $pObj) {
 
         $content = '';
 
         try {
 
             $this->initialize($PA);
-            
+
             $this->addStylesAndJavascriptToForm();
 
             $content = $this->getSingleField_typeSelect_single($PA['table'], $PA['field'], $PA['row'], $PA, $PA['fieldConf']['config'], $this->items, 'NO MATCH!');
@@ -98,9 +98,9 @@ class IconFontSelector {
             $content = $this->getExceptionOutput($e);
 
         }
-       
+
         return $content;
-	}
+    }
 
     /**
      * Initialize and check configuration
@@ -113,15 +113,15 @@ class IconFontSelector {
             throw new \Exception(LocalizationUtility::translate('iconFontSelector.exception.missingConfigCssFile', 't3kit_extension_tools'));
         }
         $this->collectCssFileInformation($PA['fieldConf']['config']['cssFile']);
-        
+
         if (isset($PA['fieldConf']['config']['fontPrefix']) && strlen(trim($PA['fieldConf']['config']['isIcoMoon'])) > 0) {
             $this->fontPrefix = $PA['fieldConf']['config']['fontPrefix'];
         }
-        
+
         if (isset($PA['fieldConf']['config']['fontSize']) && strlen(trim($PA['fieldConf']['config']['fontSize'])) > 0) {
             $this->fontSize = $PA['fieldConf']['config']['fontSize'];
         }
-        
+
         if (isset($PA['fieldConf']['config']['tableColumnsPerRow']) && strlen(trim($PA['fieldConf']['config']['tableColumnsPerRow'])) > 0) {
             $this->tableColumnsPerRow = $PA['fieldConf']['config']['tableColumnsPerRow'];
         }
@@ -138,31 +138,31 @@ class IconFontSelector {
      * @return void
      */
     private function collectCssFileInformation($filename) {
-        
+
         $this->cssFileInformation = $this->getFileInformation($filename);
         $this->cssFileInformation['referencedFiles'] = $this->getListOfFilesFromCssUrls($this->cssFileInformation['absFileName']);
-        
+
         if (is_array($this->cssFileInformation['referencedFiles']) && count($this->cssFileInformation['referencedFiles']) > 0) {
             foreach ($this->cssFileInformation['referencedFiles'] as $key => $value) {
                 try {
-                    $fullFilename = BasicFileUtility::slashPath($this->cssFileInformation['dirname']) . $value;
+                    $fullFilename = rtrim($this->cssFileInformation['dirname'], '/') . '/' . $value;
                     $fileInformation = $this->getFileInformation($fullFilename);
                 } catch (\Exception $e) {
                     $message = LocalizationUtility::translate('iconFontSelector.exception.iconFileMissing', 't3kit_extension_tools');
-                    $message .= ' (' . BasicFileUtility::slashPath($this->cssFileInformation['relativePath']) . $value . ')';
+                    $message .= ' (' . rtrim($this->cssFileInformation['dirname'], '/') . '/' . $value . ')';
                     throw new \Exception($message, $e->getCode(), $e);
                 }
             }
         }
     }
-    
+
     /**
      * Try to populate items from json file (like IcoMoon selection.json)
      * @return void
      */
     private function populateItemsFromIcoMoonJson() {
         try {
-            $filename = BasicFileUtility::slashPath($this->cssFileInformation['dirname']) . $this->icoMoonSelectionJsonFileName;
+            $filename = rtrim($this->cssFileInformation['dirname'], '/') . '/' . $this->icoMoonSelectionJsonFileName;
             $fileInformation = $this->getFileInformation($filename);
             $jsonData = json_decode(GeneralUtility::getUrl($fileInformation['absFileName']), true);
 
@@ -184,7 +184,7 @@ class IconFontSelector {
             }
         } catch (\Exception $e) {
             $message = LocalizationUtility::translate('iconFontSelector.exception.populateItemsFromIcoMoonJson', 't3kit_extension_tools');
-            $message .= ' (' . BasicFileUtility::slashPath($this->cssFileInformation['relativePath']) . $this->icoMoonSelectionJsonFileName . ')';
+            $message .= ' (' . rtrim($this->cssFileInformation['dirname'], '/') . '/' . $this->icoMoonSelectionJsonFileName . ')';
             throw new \Exception($message, $e->getCode(), $e);
         }
     }
@@ -196,7 +196,7 @@ class IconFontSelector {
      */
     private function getFileInformation($filename, $throwExeptions = TRUE) {
         $fileProperties = array();
-        
+
         $fileProperties['filename'] = $filename;
         if (strlen(trim($filename)) == 0 && $throwExeptions) {
             throw new \Exception(LocalizationUtility::translate('iconFontSelector.exception.missingFilename', 't3kit_extension_tools'),20);
@@ -220,7 +220,7 @@ class IconFontSelector {
     }
 
     private function getListOfFilesFromCssUrls($absFileName) {
-        
+
         $returnFileNames = array();
 
         if (file_exists($absFileName)) {
@@ -237,16 +237,16 @@ class IconFontSelector {
         }
         return $returnFileNames;
     }
-    
+
     /**
      * Adds and css and javascript to BE form.
      *
      * @return void
      */
-    protected function addStylesAndJavascriptToForm() {       
+    protected function addStylesAndJavascriptToForm() {
         $extCssRel = ExtensionManagementUtility::extRelPath('t3kit_extension_tools') . 'Resources/Public/Css/BE/iconFontSelector.css';
         $pageRenderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
-        $pageRenderer->addCssFile(BasicFileUtility::slashPath($this->cssFileInformation['relativePath']) . $this->cssFileInformation['basename']);
+        $pageRenderer->addCssFile(rtrim($this->cssFileInformation['relativePath'], '/') . '/' . $this->cssFileInformation['basename']);
         $pageRenderer->addCssFile($extCssRel);
     }
 
@@ -398,7 +398,7 @@ class IconFontSelector {
             $options .= ($optionGroup ? '</optgroup>' : '');
         }
 
-        // Create item form fields: 
+        // Create item form fields:
         $sOnChange = 'if (this.options[this.selectedIndex].value==\'--div--\') {this.selectedIndex=' . $selectedIndex . ';} ';
         $sOnChange .= implode('', $parameterArray['fieldChangeFunc']);
 
