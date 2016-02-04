@@ -125,6 +125,10 @@ class IconFontSelector {
         if (isset($PA['fieldConf']['config']['tableColumnsPerRow']) && strlen(trim($PA['fieldConf']['config']['tableColumnsPerRow'])) > 0) {
             $this->tableColumnsPerRow = $PA['fieldConf']['config']['tableColumnsPerRow'];
         }
+        // Include items from TCA config (will be overwritten if icon exists in font-icon)
+        if (isset($PA['fieldConf']['config']['items']) && count($PA['fieldConf']['config']['items']) > 0) {
+            $this->items = $PA['fieldConf']['config']['items'];
+        }
 
         if (isset($PA['fieldConf']['config']['isIcoMoon']) && $PA['fieldConf']['config']['isIcoMoon']) {
             // Try to parse items from selection.json file
