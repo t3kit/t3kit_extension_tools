@@ -63,7 +63,6 @@ class SvgViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper 
      */
     protected function getInlineSvg($source) {
 
-        var_dump($source);
         if (!file_exists($source)) {
             return '';
         }
