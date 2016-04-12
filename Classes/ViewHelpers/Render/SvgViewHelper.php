@@ -35,6 +35,11 @@ class SvgViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper 
 
     }
 
+    /**
+     * Generate a list from the content
+     *
+     * @param string $source
+     */
     public function render($source) {
         $sourceAbs = PATH_site.$source;
 
@@ -63,7 +68,6 @@ class SvgViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper 
      */
     protected function getInlineSvg($source) {
 
-        var_dump($source);
         if (!file_exists($source)) {
             return '';
         }
