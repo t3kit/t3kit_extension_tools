@@ -2,13 +2,11 @@
 
 namespace T3kit\T3kitExtensionTools\ViewHelpers\Get;
 
-//use TYPO3\CMS\Core\Utility\GeneralUtility;
-//use TYPO3\CMS\Backend\Utility\BackendUtility;
 /* * *************************************************************
  *
  *  Copyright notice
  *
- *  (c) 2014 Mats Svensson <mats.svensson@pixelant.se>, Pixelant AB
+ *  (c) 2016 Taras Drowalyuk <taras@pixelant.se>, Pixelant AB
  *
  *  All rights reserved
  *
