@@ -1,5 +1,6 @@
 <?php
 namespace T3kit\T3kitExtensionTools\UserFunction;
+
 /***************************************************************
  *  Copyright notice
  *
@@ -29,7 +30,7 @@ use \TYPO3\CMS\Core\Utility\File\BasicFileUtility;
 use \TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use \TYPO3\CMS\Extbase\Utility\LocalizationUtility;
 use \TYPO3\CMS\Extbase\Configuration\ConfigurationManagerInterface;
-
+use \TYPO3\CMS\Backend\Utility\BackendUtility;
 use \TYPO3\CMS\Core\Utility\StringUtility;
 
 /**
@@ -38,7 +39,8 @@ use \TYPO3\CMS\Core\Utility\StringUtility;
  * @package t3kitEztensionTools
  * @subpackage UserFunction
  */
-class IconFontSelector {
+class IconFontSelector
+{
 
     /**
      * Array to store information about the css file from parameter
@@ -81,11 +83,14 @@ class IconFontSelector {
      * @param TYPO3\CMS\Backend\Form\Element\UserElement $pObj
      * @return string
      */
-    public function renderField(array $PA, \TYPO3\CMS\Backend\Form\Element\UserElement $pObj) {
+    public function renderField(array $PA, \TYPO3\CMS\Backend\Form\Element\UserElement $pObj)
+    {
 
         $content = '';
 
         try {
+
+            $this->overridePAByPageTsConfig($PA);
 
             $this->initialize($PA);
 
@@ -107,7 +112,8 @@ class IconFontSelector {
      * @param array $PA
      * @return void
      */
-    private function initialize(array $PA) {
+    private function initialize(array $PA)
+    {
 
         if (!isset($PA['fieldConf']['config']['cssFile'])) {
             throw new \Exception(LocalizationUtility::translate('iconFontSelector.exception.missingConfigCssFile', 't3kit_extension_tools'));
@@ -141,7 +147,8 @@ class IconFontSelector {
      * @param  string $filename Filename
      * @return void
      */
-    private function collectCssFileInformation($filename) {
+    private function collectCssFileInformation($filename)
+    {
 
         $this->cssFileInformation = $this->getFileInformation($filename);
         $this->cssFileInformation['referencedFiles'] = $this->getListOfFilesFromCssUrls($this->cssFileInformation['absFileName']);
@@ -164,7 +171,8 @@ class IconFontSelector {
      * Try to populate items from json file (like IcoMoon selection.json)
      * @return void
      */
-    private function populateItemsFromIcoMoonJson() {
+    private function populateItemsFromIcoMoonJson()
+    {
         try {
             $filename = rtrim($this->cssFileInformation['dirname'], '/') . '/' . $this->icoMoonSelectionJsonFileName;
             $fileInformation = $this->getFileInformation($filename);
@@ -198,17 +206,18 @@ class IconFontSelector {
      * @param  string $filename Filename
      * @return array            Array of collected information
      */
-    private function getFileInformation($filename, $throwExeptions = TRUE) {
+    private function getFileInformation($filename, $throwExeptions = true)
+    {
         $fileProperties = array();
 
         $fileProperties['filename'] = $filename;
         if (strlen(trim($filename)) == 0 && $throwExeptions) {
-            throw new \Exception(LocalizationUtility::translate('iconFontSelector.exception.missingFilename', 't3kit_extension_tools'),20);
+            throw new \Exception(LocalizationUtility::translate('iconFontSelector.exception.missingFilename', 't3kit_extension_tools'), 20);
         }
         $fileProperties['absFileName'] = GeneralUtility::getFileAbsFileName($filename);
         $fileProperties['fileExists'] = file_exists($fileProperties['absFileName']);
         if (!$fileProperties['fileExists'] && $throwExeptions) {
-            throw new \Exception(LocalizationUtility::translate('iconFontSelector.exception.fileExists', 't3kit_extension_tools') . ' (' . $filename . ')',21);
+            throw new \Exception(LocalizationUtility::translate('iconFontSelector.exception.fileExists', 't3kit_extension_tools') . ' (' . $filename . ')', 21);
         }
         $pathInfo = PathUtility::pathinfo($fileProperties['absFileName']);
         $fileProperties['dirname'] = $pathInfo['dirname'];
@@ -217,13 +226,14 @@ class IconFontSelector {
         $fileProperties['filename'] = $pathInfo['filename'];
         $fileProperties['isAllowedAbsPath'] = GeneralUtility::isAllowedAbsPath($fileProperties['absFileName']);
         if (!$fileProperties['isAllowedAbsPath'] && $throwExeptions) {
-            throw new \Exception(LocalizationUtility::translate('iconFontSelector.exception.isAllowedAbsPath', 't3kit_extension_tools'),22);
+            throw new \Exception(LocalizationUtility::translate('iconFontSelector.exception.isAllowedAbsPath', 't3kit_extension_tools'), 22);
         }
         $fileProperties['relativePath'] = PathUtility::getRelativePathTo($fileProperties['dirname']);
         return $fileProperties;
     }
 
-    private function getListOfFilesFromCssUrls($absFileName) {
+    private function getListOfFilesFromCssUrls($absFileName)
+    {
 
         $returnFileNames = array();
 
@@ -234,7 +244,7 @@ class IconFontSelector {
             preg_match_all('/url\(([\s])?([\"|P<name>\'])?(.*?)([\"|\'])?([\s])?\)/i', $fileContent, $matches, PREG_PATTERN_ORDER);
             if (is_array($matches) && count($matches[3]) > 0) {
                 foreach ($matches[3] as $key => $value) {
-                    list($fileName) = GeneralUtility::trimExplode('?',$value);
+                    list($fileName) = GeneralUtility::trimExplode('?', $value);
                     $returnFileNames[] = $fileName;
                 }
             }
@@ -247,7 +257,8 @@ class IconFontSelector {
      *
      * @return void
      */
-    protected function addStylesAndJavascriptToForm() {
+    protected function addStylesAndJavascriptToForm()
+    {
         $extCssRel = ExtensionManagementUtility::extRelPath('t3kit_extension_tools') . 'Resources/Public/Css/BE/iconFontSelector.css';
         $pageRenderer = \TYPO3\CMS\Core\Utility\GeneralUtility::makeInstance(\TYPO3\CMS\Core\Page\PageRenderer::class);
         $pageRenderer->addCssFile(rtrim($this->cssFileInformation['relativePath'], '/') . '/' . $this->cssFileInformation['basename']);
@@ -259,7 +270,8 @@ class IconFontSelector {
      * @param  \Exception $e The exception
      * @return srting        HTML to render
      */
-    protected function getExceptionOutput(\Exception $e) {
+    protected function getExceptionOutput(\Exception $e)
+    {
         $title = LocalizationUtility::translate('iconFontSelector.exception.title', 't3kit_extension_tools');
         $message = $e->getMessage();
         $content = '<div class="alert alert-danger">
@@ -291,7 +303,8 @@ class IconFontSelector {
      * @param string $noMatchingLabel Label for no-matching-value
      * @return string The HTML code for the item
      */
-    protected function getSingleField_typeSelect_single($table, $field, $row, $parameterArray, $config, $selectItems, $noMatchingLabel) {
+    protected function getSingleField_typeSelect_single($table, $field, $row, $parameterArray, $config, $selectItems, $noMatchingLabel)
+    {
         // Initialization:
         $selectId = StringUtility::getUniqueId('tceforms-select-');
         $selectedIndex = 0;
@@ -449,9 +462,10 @@ class IconFontSelector {
      * @param  boolean $selected If the icon is selected/active
      * @return string           HTML output
      */
-    protected function getIconHtml($icon, $selected) {
+    protected function getIconHtml($icon, $selected)
+    {
         $iconClass = $this->fontPrefix . $icon;
-        $selectedClass = $selected == TRUE ? ' ' . $this->selectedIconClass : '';
+        $selectedClass = $selected == true ? ' ' . $this->selectedIconClass : '';
         return '<i class="' . $iconClass . $selectedClass . ' "></i>';
     }
 
@@ -462,7 +476,8 @@ class IconFontSelector {
      * @param array $config
      * @return string
      */
-    protected function getValidationDataAsDataAttribute(array $config) {
+    protected function getValidationDataAsDataAttribute(array $config)
+    {
         return sprintf(' data-formengine-validation-rules="%s" ', htmlspecialchars($this->getValidationDataAsJsonString($config)));
     }
 
@@ -472,10 +487,11 @@ class IconFontSelector {
      * @param array $config
      * @return string
      */
-    protected function getValidationDataAsJsonString(array $config) {
+    protected function getValidationDataAsJsonString(array $config)
+    {
         $validationRules = array();
         if (!empty($config['eval'])) {
-            $evalList = GeneralUtility::trimExplode(',', $config['eval'], TRUE);
+            $evalList = GeneralUtility::trimExplode(',', $config['eval'], true);
             unset($config['eval']);
             foreach ($evalList as $evalType) {
                 $validationRules[] = array(
@@ -514,5 +530,35 @@ class IconFontSelector {
         return json_encode($validationRules);
     }
 
+    /**
+     * overrideByPageTsConfig Overrides some flexform configuration
+     * @param  array &$PA PA
+     * @return void
+     */
+    protected function overridePAByPageTsConfig(&$PA)
+    {
+
+        $pageId = $PA['row']['pid'];
+        $cType = $PA['row']['CType'][0];
+        $table = $PA['table'];
+        $field = $PA['field'];
+        $pageTsConfig = GeneralUtility::removeDotsFromTS(BackendUtility::getPagesTSconfig($pageId));
+
+        if (isset($pageTsConfig['TCEFORM'][$table][$field][$cType]['sDEF']['iconClass'])) {
+            $tceForm = $pageTsConfig['TCEFORM'][$table][$field][$cType]['sDEF']['iconClass'];
+
+            // override cssFile
+            if (isset($tceForm['config']['cssFile']) && strlen($tceForm['config']['cssFile']) > 0) {
+                $PA['fieldConf']['config']['cssFile'] = $tceForm['config']['cssFile'];
+            }
+
+            // addItems
+            if (isset($tceForm['addItems']) && count($tceForm['addItems']) > 0) {
+                foreach ($tceForm['addItems'] as $key => $value) {
+                    $this->items[] = array('0' => $value, '1' => $key, '2' => $key);
+                }
+            }
+        }
+
+    }
 }
-?>
