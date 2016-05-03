@@ -177,22 +177,18 @@ class IconFontSelector
             $filename = rtrim($this->cssFileInformation['dirname'], '/') . '/' . $this->icoMoonSelectionJsonFileName;
             $fileInformation = $this->getFileInformation($filename);
             $jsonData = json_decode(GeneralUtility::getUrl($fileInformation['absFileName']), true);
-
             if (is_array($jsonData['icons']) && count($jsonData['icons']) > 0) {
                 if (isset($jsonData['preferences']['fontPref']['prefix']) && $jsonData['metadata']['name']) {
                     $this->fontPrefix = $jsonData['preferences']['fontPref']['prefix'];
                     foreach ($jsonData['icons'] as $key => $icon) {
                         $title = preg_replace("/([[:alpha:]])([[:digit:]])/", "\\1 \\2", $icon['properties']['name']);
-                        $this->items[$icon['properties']['order']] = array(
+                        $this->items[] = array(
                             '0' => ucwords(str_replace(array('-', '_'), ' ', $title)),
                             '1' => $icon['properties']['name'],
                             '2' => $icon['properties']['name'],
                         );
                     }
                 }
-            }
-            if (is_array($this->items) && count($this->items) > 0) {
-                ksort($this->items);
             }
         } catch (\Exception $e) {
             $message = LocalizationUtility::translate('iconFontSelector.exception.populateItemsFromIcoMoonJson', 't3kit_extension_tools');
@@ -554,8 +550,13 @@ class IconFontSelector
 
             // addItems
             if (isset($tceForm['addItems']) && count($tceForm['addItems']) > 0) {
+                $laguageService = GeneralUtility::makeInstance(\TYPO3\CMS\Lang\LanguageService::class);
                 foreach ($tceForm['addItems'] as $key => $value) {
-                    $this->items[] = array('0' => $value, '1' => $key, '2' => $key);
+                    $localizedValue = $laguageService->sL($value);
+                    if (strlen($localizedValue) == 0) {
+                        $localizedValue = $value;
+                    }
+                    $this->items[] = array('0' => $localizedValue, '1' => $key, '2' => $key);
                 }
             }
         }
