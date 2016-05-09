@@ -539,9 +539,15 @@ class IconFontSelector
         $table = $PA['table'];
         $field = $PA['field'];
         $pageTsConfig = GeneralUtility::removeDotsFromTS(BackendUtility::getPagesTSconfig($pageId));
+        $tceForm = null;
 
         if (isset($pageTsConfig['TCEFORM'][$table][$field][$cType]['sDEF']['iconClass'])) {
             $tceForm = $pageTsConfig['TCEFORM'][$table][$field][$cType]['sDEF']['iconClass'];
+        } elseif (isset($pageTsConfig['TCEFORM'][$table][$field]['iconClass'])) {
+            $tceForm = $pageTsConfig['TCEFORM'][$table][$field]['iconClass'];
+        }
+
+        if (is_array($tceForm) && count($tceForm)>0) {
 
             // override cssFile
             if (isset($tceForm['config']['cssFile']) && strlen($tceForm['config']['cssFile']) > 0) {
