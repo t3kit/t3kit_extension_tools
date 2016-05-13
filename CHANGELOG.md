@@ -1,3 +1,6 @@
+#### v0.0.4 `May 13, 2016`
+- **[FIX]** Fixed BE viewhelper IconAndTitleLinkForRecord ([b0ac990](https://github.com/t3kit/t3kit_extension_tools/commit/b0ac990))
+
 #### v0.0.3 `May 10, 2016`
 - **[DOC]** add Readme ([b9d96c2](https://github.com/t3kit/t3kit_extension_tools/commit/b9d96c2))
 - **[CHORE]** add changelog file ([af8440e](https://github.com/t3kit/t3kit_extension_tools/commit/af8440e))
