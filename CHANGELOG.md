@@ -1,4 +1,9 @@
 
+#### v1.0.1 `July 8, 2016`
+- **[DOC]** add license file (Podio feature_24) ([ac1242a](https://github.com/t3kit/t3kit_extension_tools/commit/ac1242a))
+
+***
+
 #### v1.0.0 `June 22, 2016`
 
 ***
