@@ -1,4 +1,11 @@
 
+#### v1.0.2 `July 18, 2016`
+- **[UPDATE]** correct and update dependencies in ext_emconf ([6b1b97b](https://github.com/t3kit/t3kit_extension_tools/commit/6b1b97b))
+- **[DOC]** update README file ([fe9cb6b](https://github.com/t3kit/t3kit_extension_tools/commit/fe9cb6b))
+- **[DOC]** add CONTRIBUTING.md file ([0c31624](https://github.com/t3kit/t3kit_extension_tools/commit/0c31624))
+
+***
+
 #### v1.0.1 `July 8, 2016`
 - **[DOC]** add license file (Podio feature_24) ([ac1242a](https://github.com/t3kit/t3kit_extension_tools/commit/ac1242a))
 
