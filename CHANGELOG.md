@@ -1,4 +1,9 @@
 
+#### v1.0.3 `October 18, 2016`
+- **[FIX]** php dependency version ([dac1a07](https://github.com/t3kit/t3kit_extension_tools/commit/dac1a07))
+
+***
+
 #### v1.0.2 `July 18, 2016`
 - **[UPDATE]** correct and update dependencies in ext_emconf ([6b1b97b](https://github.com/t3kit/t3kit_extension_tools/commit/6b1b97b))
 - **[DOC]** update README file ([fe9cb6b](https://github.com/t3kit/t3kit_extension_tools/commit/fe9cb6b))
