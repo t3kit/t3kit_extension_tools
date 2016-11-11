@@ -26,6 +26,17 @@ namespace T3kit\T3kitExtensionTools\ViewHelpers\Render;
  ***************************************************************/
 class SvgViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
 
+    /**
+     * @var boolean
+     */
+    protected $escapeChildren = FALSE;
+
+    /**
+     * @var boolean
+     */
+    protected $escapeOutput = FALSE;
+
+
     public function initializeArguments()
     {
         parent::initializeArguments();
@@ -93,4 +104,3 @@ class SvgViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper 
         return $domXml->ownerDocument->saveXML($domXml->ownerDocument->documentElement);
     }
 }
-?>

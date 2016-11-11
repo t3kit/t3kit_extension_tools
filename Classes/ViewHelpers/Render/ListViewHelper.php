@@ -25,8 +25,18 @@ namespace T3kit\T3kitExtensionTools\ViewHelpers\Render;
  *  This copyright notice MUST APPEAR in all copies of the script!
  ***************************************************************/
 class ListViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper {
-	
-	/**
+
+    /**
+     * @var boolean
+     */
+    protected $escapeChildren = FALSE;
+
+    /**
+     * @var boolean
+     */
+    protected $escapeOutput = FALSE;
+
+    /**
 	 * Generate a list from the content
 	 *
 	 * @param string $content
@@ -54,4 +64,3 @@ class ListViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHelper
 		return $html;
 	}
 }
-?>

@@ -32,6 +32,16 @@ class ContentViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHel
      */
     protected $configurationManager;
 
+    /**
+     * @var boolean
+     */
+    protected $escapeChildren = FALSE;
+
+    /**
+     * @var boolean
+     */
+    protected $escapeOutput = FALSE;
+
 	/**
 	 * Renders a tt_content element
 	 *
@@ -41,7 +51,6 @@ class ContentViewHelper extends \TYPO3\CMS\Fluid\Core\ViewHelper\AbstractViewHel
 	public function render($id) {
 		$cObj = $this->configurationManager->getContentObject();
 		$conf = array('tables' => 'tt_content', 'source' => $id, 'dontCheckPid' => 1);
-        return $cObj->RECORDS($conf);
+        return $cObj->cObjGetSingle('RECORDS', $conf);
 	}
 }
-?>
