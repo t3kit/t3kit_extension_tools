@@ -4,7 +4,7 @@
         <header/>
         <body>
             <trans-unit id="extmng.additionalChars">
-                <source>Additional chars replace in Reaulr process title hook.</source>
+                <source>Additional chars replace in Reaurl process title.</source>
             </trans-unit>
         </body>
     </file>
