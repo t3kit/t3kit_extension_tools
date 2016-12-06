@@ -1,5 +1,4 @@
 {
-
     "name": "t3kit/t3kit-extension-tools",
     "description": "An extension with tools for extensions.",
     "type": "typo3-cms-extension",
@@ -15,6 +14,5 @@
     },
     "require": {
         "typo3/cms": ">=7.5.0 <=7.7.99"
-    },
-    "minimum-stability": "dev"
+    }
 }
