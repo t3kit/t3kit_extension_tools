@@ -1,4 +1,13 @@
 
+#### v1.1.0 `January 24, 2017`
+- **[FEATURE]** Add new viewhelper to extend image slider element (Podio feature_54) (#12) ([6be533f](https://github.com/t3kit/t3kit_extension_tools/commit/6be533f))
+- **[FIX]** Add minimum stability flag ([44155a7](https://github.com/t3kit/t3kit_extension_tools/commit/44155a7))
+
+:heavy_exclamation_mark:**Breaking Changes:**
+- **[!!!]** **[FIX]** avoid using of outdated realurl encode title hook, fix #10 (#11) ([6d3ed4c](https://github.com/t3kit/t3kit_extension_tools/commit/6d3ed4c))
+
+***
+
 #### v1.0.3 `October 18, 2016`
 - **[FIX]** php dependency version ([dac1a07](https://github.com/t3kit/t3kit_extension_tools/commit/dac1a07))
 
