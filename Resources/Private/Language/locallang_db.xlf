@@ -18,6 +18,9 @@
             <trans-unit id="none">
                 <source>None</source>
             </trans-unit>
+            <trans-unit id="new_conf">
+                <source>News configuration</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
