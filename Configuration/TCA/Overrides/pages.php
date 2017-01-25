@@ -13,7 +13,8 @@ $init = function () {
                 'max' => 1,
                 'renderType' => 'selectSingle',
                 'items' => [
-                    [$ll . 'none', '0']
+                    [$ll . 'none', '0'],
+                    [$ll . 'new_conf', '--div--']
                 ],
                 'itemsProcFunc' => \T3kit\T3kitExtensionTools\Utility\HelperUtility::class . '->getTcaFixedPostVarItems'
             ]
