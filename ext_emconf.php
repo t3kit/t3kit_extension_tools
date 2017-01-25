@@ -10,12 +10,12 @@
 # writing. "version" and "dependencies" must not be touched!
 ########################################################################
 
-$EM_CONF[$_EXTKEY] = array(
+$EM_CONF[$_EXTKEY] = [
 	'title' => 't3kit extension tools',
 	'description' => 'An extension with tools for extensions. t3kit project',
 	'category' => 'backend',
 	'shy' => 0,
-	'version' => '1.0.3',
+	'version' => '1.1.0',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => '',
@@ -32,16 +32,17 @@ $EM_CONF[$_EXTKEY] = array(
 	'author_company' => '',
 	'CGLcompliance' => '',
 	'CGLcompliance_note' => '',
-	'constraints' => array(
-		'depends' => array(
+	'constraints' => [
+		'depends' => [
 			'php'    => '5.5.0-7.0.99',
 			'typo3'  => '7.5.0-7.6.99',
-            'gridelements' => '8.0.0-dev'
-		),
-		'conflicts' => array(
-		),
-		'suggests' => array(
-		),
-	),
-	'_md5_values_when_last_written' => 'a:0:{}',
-);
+            'gridelements' => '8.0.0-dev',
+			'realurl' => ''
+		],
+		'conflicts' => [
+		],
+		'suggests' => [
+		],
+	],
+	'_md5_values_when_last_written' => 'a:0:{}'
+];
