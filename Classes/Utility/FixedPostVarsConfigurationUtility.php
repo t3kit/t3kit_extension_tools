@@ -3,7 +3,9 @@
 
 namespace T3kit\T3kitExtensionTools\Utility;
 
+use Doctrine\DBAL\Query\QueryBuilder;
 use TYPO3\CMS\Backend\Utility\BackendUtility;
+use TYPO3\CMS\Core\Database\ConnectionPool;
 use TYPO3\CMS\Core\Database\DatabaseConnection;
 use TYPO3\CMS\Core\Utility\ArrayUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -89,7 +91,17 @@ class FixedPostVarsConfigurationUtility
                 . BackendUtility::deleteClause('pages')
             );
         } else {
-            $pages = [];
+            /** @var QueryBuilder $queryBuilder */
+            $queryBuilder = GeneralUtility::makeInstance(ConnectionPool::class)->getQueryBuilderForTable('pages');
+            $pages = $queryBuilder
+                ->select('uid', 'tx_t3kitextensiontools_fixed_post_var_conf')
+                ->from('pages')
+                ->where(
+                    $queryBuilder->expr()->neq('tx_t3kitextensiontools_fixed_post_var_conf', $queryBuilder->createNamedParameter('')),
+                    $queryBuilder->expr()->neq('tx_t3kitextensiontools_fixed_post_var_conf', $queryBuilder->createNamedParameter('0'))
+                )
+                ->execute()
+                ->fetchAll();
         }
 
         return $pages;
