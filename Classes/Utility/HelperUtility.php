@@ -24,7 +24,7 @@ class HelperUtility
     public static function getExtConf()
     {
         if (self::$extConf === null) {
-            self::$extConf = @unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['t3kit_extension_tools']);
+            self::$extConf = unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['t3kit_extension_tools']);
         }
 
         return self::$extConf;
