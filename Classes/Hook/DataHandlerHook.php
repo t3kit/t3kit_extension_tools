@@ -16,7 +16,7 @@ use TYPO3\CMS\Core\Utility\MathUtility;
 class DataHandlerHook
 {
     /**
-     * If ab child page was created save its uid
+     * If page was created/edited and fixedPostVarConf changed we need to update configuration file
      *
      * @param string $status
      * @param string $table

@@ -1,12 +1,11 @@
 <?php
 defined('TYPO3_MODE') or die();
 
-//
 $init = function ($_EXTKEY) {
     $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][\DmitryDulepov\Realurl\Utility::class]['className'] = \T3kit\T3kitExtensionTools\Xclass\Realurl\Utility::class;
 
 
-    # Register data handler hook
+    // Register data handler hook
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processDatamapClass'][$_EXTKEY] = \T3kit\T3kitExtensionTools\Hook\DataHandlerHook::class;
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['processCmdmapClass'][$_EXTKEY] = \T3kit\T3kitExtensionTools\Hook\DataHandlerHook::class;
 
@@ -15,12 +14,12 @@ $init = function ($_EXTKEY) {
      */
     $extConf = \T3kit\T3kitExtensionTools\Utility\HelperUtility::getExtConf();
 
-    if (is_array($extConf) && $extConf['fixedPostVarsConfFile']) {
-        $filePath = PATH_site .trim($extConf['fixedPostVarsConfFile']);
+    if (is_array($extConf) && $extConf['fixedPostVarsConfigurationfFile']) {
+        $filePath = PATH_site . trim($extConf['fixedPostVarsConfigurationfFile']);
     }
 
     if (isset($filePath) && file_exists($filePath)) {
-        \TYPO3\CMS\Core\Utility\GeneralUtility::requireOnce($filePath);
+        require_once($filePath);
     } else {
         /** @noinspection PhpIncludeInspection */
         @include_once(PATH_site . 'typo3conf/ext/t3kit_extension_tools/Configuration/Realurl/predefined_fixedPostVars_conf.php');

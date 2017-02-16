@@ -3,13 +3,13 @@
     <file source-language="en" datatype="plaintext" original="messages" date="2013-11-13T17:39:17Z" product-name="t3kit_extension_tools">
         <header/>
         <body>
-            <trans-unit id="extmng.additionalChars">
+            <trans-unit id="extmng.additionalCharacters">
                 <source>Additional chars replace in Reaurl process title hook.</source>
             </trans-unit>
             <trans-unit id="extmng.fixedPostVarsSaveFilePath">
                 <source>Path to file where to save fixedPostVars configuration</source>
             </trans-unit>
-            <trans-unit id="extmng.fixedPostVarsConfFile">
+            <trans-unit id="extmng.fixedPostVarsConfigurationfFile">
                 <source>Path to file with predefined configuration</source>
             </trans-unit>
             <trans-unit id="pages.tx_t3kitextensiontools_fixed_post_var_conf">

@@ -19,12 +19,16 @@ class HelperUtility
     /**
      * Get extension configuration
      *
-     * @return array|mixed
+     * @return array
      */
     public static function getExtConf()
     {
         if (self::$extConf === null) {
-            self::$extConf = @unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['t3kit_extension_tools']);
+            if (isset($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['t3kit_extension_tools'])) {
+                self::$extConf = unserialize((string)$GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['t3kit_extension_tools']);
+            } else {
+                self::$extConf = [];
+            }
         }
 
         return self::$extConf;
