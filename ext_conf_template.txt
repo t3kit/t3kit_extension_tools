@@ -1,2 +1,8 @@
-# cat=basic/enable/100; type=string; label=LLL:EXT:t3kit_extension_tools/Resources/Private/Language/locallang_db.xlf:extmng.additionalChars
-additionalChars =
+# cat=basic/enable/100; type=string; label=LLL:EXT:t3kit_extension_tools/Resources/Private/Language/locallang_db.xlf:extmng.additionalCharacters
+additionalCharacters =
+
+# cat=basic/enable/110; type=string; label=LLL:EXT:t3kit_extension_tools/Resources/Private/Language/locallang_db.xlf:extmng.fixedPostVarsConfigurationfFile
+fixedPostVarsConfigurationfFile = typo3conf/ext/t3kit_extension_tools/Configuration/Realurl/predefined_fixedPostVars_conf.php
+
+# cat=basic/enable/120; type=string; label=LLL:EXT:t3kit_extension_tools/Resources/Private/Language/locallang_db.xlf:extmng.fixedPostVarsSaveFilePath
+fixedPostVarsSaveFilePath = typo3conf/realurl_fixedPostVars_conf.php

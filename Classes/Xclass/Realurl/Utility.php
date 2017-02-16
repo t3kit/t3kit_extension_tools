@@ -3,6 +3,7 @@
 
 namespace T3kit\T3kitExtensionTools\Xclass\Realurl;
 
+use T3kit\T3kitExtensionTools\Utility\HelperUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -54,12 +55,12 @@ class Utility extends \DmitryDulepov\Realurl\Utility
         static $finalReplacements = null;
 
         if ($finalReplacements === null) {
-            $t3kitExtToolConf = @unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['t3kit_extension_tools']);
+            $t3kitExtToolConf = HelperUtility::getExtConf();
             $additionalChars = [];
 
-            if (!empty($t3kitExtToolConf['additionalChars'])) {
+            if (!empty($t3kitExtToolConf['additionalCharacters'])) {
 
-                $charsSet = GeneralUtility::trimExplode(',', $t3kitExtToolConf['additionalChars']);
+                $charsSet = GeneralUtility::trimExplode(',', $t3kitExtToolConf['additionalCharacters']);
 
                 foreach ($charsSet as $charSet) {
                     list($find, $replace) = GeneralUtility::trimExplode('=>', $charSet, true);
