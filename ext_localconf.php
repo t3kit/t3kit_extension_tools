@@ -15,7 +15,7 @@ $init = function ($_EXTKEY) {
     $extConf = \T3kit\T3kitExtensionTools\Utility\HelperUtility::getExtConf();
 
     if (is_array($extConf) && $extConf['fixedPostVarsConfigurationfFile']) {
-        $filePath = PATH_site .trim($extConf['fixedPostVarsConfigurationfFile']);
+        $filePath = PATH_site . trim($extConf['fixedPostVarsConfigurationfFile']);
     }
 
     if (isset($filePath) && file_exists($filePath)) {
