@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<xliff version="1.0">
+	<file source-language="en" target-language="de" datatype="plaintext" original="messages" date="2015-11-22T00:40:57Z">
+		<header>
+			<generator>LFEditor</generator>
+		</header>
+		<body>
+		<trans-unit id="iconFontSelector.exception.fileExists" approved="yes">
+			<source>The specified file doesn't exist</source>
+			<target>Die angegebene Datei existiert nicht</target>
+		</trans-unit>
+		<trans-unit id="iconFontSelector.exception.iconFileMissing" approved="yes">
+			<source>Missing font file included from the css</source>
+			<target>Fehlende Schriftart-Datei von CSS eingebunden</target>
+		</trans-unit>
+		<trans-unit id="iconFontSelector.exception.isAllowedAbsPath" approved="yes">
+			<source>The specified file is not within the PATH_site OR within the lockRootPath</source>
+			<target>Die angegebene Datei ist nicht innerhalb des PATH_site oder innerhalb des lockRootPath</target>
+		</trans-unit>
+		<trans-unit id="iconFontSelector.exception.missingConfigCssFile" approved="yes">
+			<source>cssFile is not set</source>
+			<target>cssFile ist nicht festgelegt</target>
+		</trans-unit>
+		<trans-unit id="iconFontSelector.exception.missingFilename" approved="yes">
+			<source>cssFile is empty</source>
+			<target>cssFile ist leer</target>
+		</trans-unit>
+		<trans-unit id="iconFontSelector.exception.populateItemsFromIcoMoonJson" approved="yes">
+			<source>isIcoMoon is set, but the file was not found.</source>
+			<target>isIcoMoon eingestellt, aber die Datei wurde nicht gefunden.</target>
+		</trans-unit>
+		<trans-unit id="iconFontSelector.exception.title" approved="yes">
+			<source>TCA Configuration error</source>
+			<target>TCA Konfigurationsfehler</target>
+		</trans-unit>
+		</body>
+	</file>
+</xliff>
