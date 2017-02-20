@@ -1,4 +1,14 @@
 
+#### v1.2.0 `February 20, 2017`
+- **[TASK]** space after appending string ([d22c1bc](https://github.com/t3kit/t3kit_extension_tools/commit/d22c1bc))
+- **[TASK]** small fixes for variables names, additional checks ([4df9190](https://github.com/t3kit/t3kit_extension_tools/commit/4df9190))
+- **[TASK]** small code adjustments ([f42edba](https://github.com/t3kit/t3kit_extension_tools/commit/f42edba))
+- **[TASK]** create group in select for news configurations ([7a2f845](https://github.com/t3kit/t3kit_extension_tools/commit/7a2f845))
+- **[TASK]** support of ConnectionPool in TYPO3 v8 ([debc2a4](https://github.com/t3kit/t3kit_extension_tools/commit/debc2a4))
+- **[BUGFIX]** possibility to change fixed post var configuration of realurl ([fddf5b8](https://github.com/t3kit/t3kit_extension_tools/commit/fddf5b8))
+
+***
+
 #### v1.1.0 `January 24, 2017`
 - **[FEATURE]** Add new viewhelper to extend image slider element (Podio feature_54) (#12) ([6be533f](https://github.com/t3kit/t3kit_extension_tools/commit/6be533f))
 - **[FIX]** Add minimum stability flag ([44155a7](https://github.com/t3kit/t3kit_extension_tools/commit/44155a7))
