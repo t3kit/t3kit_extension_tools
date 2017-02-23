@@ -21,6 +21,16 @@
             <trans-unit id="new_conf">
                 <source>News configuration</source>
             </trans-unit>
+
+            <trans-unit id="realurl_conf.error.title">
+                <source>Error</source>
+            </trans-unit>
+            <trans-unit id="realurl_conf.error.empty_key">
+                <source>Value of "key" could not be empty. Please, check realurl "fixedPostVars" configuration.</source>
+            </trans-unit>
+            <trans-unit id="realurl_conf.error.double_key">
+                <source>Key "%s" already in use. Please, check realurl "fixedPostVars" configuration.</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
