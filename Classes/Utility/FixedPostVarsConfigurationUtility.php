@@ -1,6 +1,5 @@
 <?php
 
-
 namespace T3kit\T3kitExtensionTools\Utility;
 
 use Doctrine\DBAL\Query\QueryBuilder;
@@ -28,17 +27,18 @@ class FixedPostVarsConfigurationUtility
 
         if (!$this->canWriteConfiguration($filePath)) {
             throw new \RuntimeException(
-                $filePath . ' is not writable.', 1485349703
+                $filePath . ' is not writable.',
+                1485349703
             );
         }
 
-        $configurations = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['t3kit_extension_tools']['fixedPostVars'];
+        $configurations = $this->getConfiguration();
         $varNameToPageFixedUids = [];
 
         $pages = $this->getFixedPagesUids();
 
         $content = '<?php' . LF;
-        $content .= '$init = function() {' . LF;
+        $content .= '$init = function () {' . LF;
 
         // generate fixed post var config vars
         foreach ($pages as $page) {
@@ -47,7 +47,13 @@ class FixedPostVarsConfigurationUtility
             if (array_key_exists($key, $configurations)) {
                 if (!array_key_exists($key, $varNameToPageFixedUids)) {
                     $varName = '$' . GeneralUtility::underscoredToLowerCamelCase($key);
-                    $content .= LF . $varName . ' = ' . ArrayUtility::arrayExport($configurations[$key]['configuration']) . ';' . LF;
+                    $content .= '    ' . $varName . ' = ';
+                    $content .= $this->fixIndent(
+                        ArrayUtility::arrayExport(
+                            $configurations[$key]['configuration']
+                        )
+                    );
+                    $content .= ';' . LF;
 
                     // save var name
                     $varNameToPageFixedUids[$key] = [
@@ -60,17 +66,74 @@ class FixedPostVarsConfigurationUtility
             }
         }
 
+        $fixedPostVarLine = '    ';
+        $fixedPostVarLine .= '$GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTCONF\'][\'realurl\'][\'_DEFAULT\'][\'fixedPostVars\']';
+
         foreach ($varNameToPageFixedUids as $key => $varNameToPageFixedUid) {
+            // first write configuration
+            $content .= $fixedPostVarLine;
+            $content .= sprintf(
+                '[\'%s\'] = %s;',
+                $key,
+                $varNameToPageFixedUid['varName']
+            );
+            $content .= LF;
+
+            // now add it for each page
             foreach ($varNameToPageFixedUid['fixedUids'] as $fixedUid) {
-                $content .= '$GLOBALS[\'TYPO3_CONF_VARS\'][\'EXTCONF\'][\'realurl\'][\'_DEFAULT\'][\'fixedPostVars\'][\'' . $fixedUid . '\'] = ' . $varNameToPageFixedUid['varName'] . ';' . LF;
+                $content .= $fixedPostVarLine;
+                $content .= sprintf(
+                    '[\'%s\'] = \'%s\';',
+                    $fixedUid,
+                    $key
+                );
+                $content .= LF;
             }
+
+            $content .= LF;
         }
 
-        $content .= LF . '};' . LF;
+        $content .= '};' . LF;
         $content .= '$init();' . LF;
         $content .= 'unset($init);' . LF;
 
         GeneralUtility::writeFile($filePath, $content, true);
+    }
+
+    /**
+     * Fix indent for configuration array
+     *
+     * @param $string
+     * @return string
+     */
+    protected function fixIndent($string)
+    {
+        $lines = explode(PHP_EOL, $string);
+
+        foreach ($lines as &$line) {
+            $line = '    ' . $line;
+        }
+
+        return ltrim(implode(LF, $lines));
+    }
+
+    /**
+     * Generate configuration array with associative keys
+     *
+     * @return array
+     */
+    protected function getConfiguration()
+    {
+        $configuration = $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['t3kit_extension_tools']['fixedPostVars'];
+        $processedConfiguration = [];
+
+        if (is_array($configuration)) {
+            foreach ($configuration as $item) {
+                $processedConfiguration[$item['key']] = $item;
+            }
+        }
+
+        return $processedConfiguration;
     }
 
     /**
@@ -80,14 +143,16 @@ class FixedPostVarsConfigurationUtility
      */
     protected function getFixedPagesUids()
     {
+        $field = 'tx_t3kitextensiontools_fixed_post_var_conf';
+
         if (version_compare(TYPO3_version, '8.0', '<')) {
             /** @var DatabaseConnection $dbConnection */
             $dbConnection = $GLOBALS['TYPO3_DB'];
 
             $pages = $dbConnection->exec_SELECTgetRows(
-                'uid, tx_t3kitextensiontools_fixed_post_var_conf',
+                'uid, ' . $field,
                 'pages',
-                'tx_t3kitextensiontools_fixed_post_var_conf != \'0\' AND tx_t3kitextensiontools_fixed_post_var_conf != \'\''
+                $field . ' != \'0\' AND ' . $field . ' != \'\''
                 . BackendUtility::deleteClause('pages')
             );
         } else {
@@ -97,8 +162,14 @@ class FixedPostVarsConfigurationUtility
                 ->select('uid', 'tx_t3kitextensiontools_fixed_post_var_conf')
                 ->from('pages')
                 ->where(
-                    $queryBuilder->expr()->neq('tx_t3kitextensiontools_fixed_post_var_conf', $queryBuilder->createNamedParameter('')),
-                    $queryBuilder->expr()->neq('tx_t3kitextensiontools_fixed_post_var_conf', $queryBuilder->createNamedParameter('0'))
+                    $queryBuilder->expr()->neq(
+                        $field,
+                        $queryBuilder->createNamedParameter('')
+                    ),
+                    $queryBuilder->expr()->neq(
+                        $field,
+                        $queryBuilder->createNamedParameter('0')
+                    )
                 )
                 ->execute()
                 ->fetchAll();
@@ -126,7 +197,7 @@ class FixedPostVarsConfigurationUtility
      */
     protected function getSaveFilePath()
     {
-        $extConf = \T3kit\T3kitExtensionTools\Utility\HelperUtility::getExtConf();
+        $extConf = HelperUtility::getExtConf();
 
         if (is_array($extConf) && $extConf['fixedPostVarsSaveFilePath']) {
             $filePath = PATH_site . trim($extConf['fixedPostVarsSaveFilePath']);

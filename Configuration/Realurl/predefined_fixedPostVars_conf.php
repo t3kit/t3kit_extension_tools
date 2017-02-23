@@ -8,8 +8,9 @@ $init = function () {
     $configuration = &$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['t3kit_extension_tools'];
 
     // predefine configuration for news item single view
-    $configuration['fixedPostVars']['news_single_view'] = [
+    $configuration['fixedPostVars'][] = [
         'title' => 'News single view',
+        'key' => 'news_single_view',
         'configuration' => [
             [
                 'GETvar' => 'tx_news_pi1[action]',
@@ -43,8 +44,9 @@ $init = function () {
     ];
 
     // predefine configuration for news category menu
-    $configuration['fixedPostVars']['categories_item'] = [
+    $configuration['fixedPostVars'][] = [
         'title' => 'Article category',
+        'key' => 'categories_item',
         'configuration' => [
             [
                 'GETvar' => 'tx_news_pi1[overwriteDemand][categories]',
@@ -64,8 +66,9 @@ $init = function () {
     ];
 
     // predefine configuration for news tags menu
-    $configuration['fixedPostVars']['tags_item'] = [
+    $configuration['fixedPostVars'][] = [
         'title' => 'Article tag',
+        'key' => 'tags_item',
         'configuration' => [
             [
                 'GETvar' => 'tx_news_pi1[overwriteDemand][tags]',
@@ -85,8 +88,9 @@ $init = function () {
     ];
 
     // predefine configuration for news date menu
-    $configuration['fixedPostVars']['date_item'] = [
+    $configuration['fixedPostVars'][] = [
         'title' => 'Article date',
+        'key' => 'date_item',
         'configuration' => [
             [
                 'GETvar' => 'tx_news_pi1[controller]',
