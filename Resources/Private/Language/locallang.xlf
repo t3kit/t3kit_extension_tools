@@ -24,6 +24,19 @@
 			<trans-unit id="iconFontSelector.exception.iconFileMissing">
 				<source>Missing font file included from the css</source>
 			</trans-unit>
+
+			<trans-unit id="customizer" xml:space="preserve">
+				<source>Customize Theme</source>
+			</trans-unit>
+			<trans-unit id="customizer.url.label" xml:space="preserve">
+				<source>Link to Customizer Site</source>
+			</trans-unit>
+			<trans-unit id="customizer.url.placeholder" xml:space="preserve">
+				<source>http://t3kit.github.io/theme_t3kit_customizer</source>
+			</trans-unit>
+			<trans-unit id="customizer.error" xml:space="preserve">
+				<source>Error: Could not load Customizer for this page.</source>
+			</trans-unit>
 		</body>
 	</file>
 </xliff>

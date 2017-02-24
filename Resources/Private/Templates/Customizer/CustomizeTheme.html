@@ -1,0 +1,53 @@
+{namespace themes=KayStrobach\Themes\ViewHelpers}
+{namespace tools=T3kit\T3kitExtensionTools\ViewHelpers\Be}
+
+<f:layout name="Backend" />
+
+<f:section name="Buttons">
+	<f:if condition="{themeIsSelectable}">
+		<f:if condition="{selectedTheme}">
+			<span class="t3-icon t3-icon-actions t3-icon-actions-document t3-icon-document-save">
+				<input type="button" name="_savedok" class="c-inputButton" title="Save document" id="saveIcon">
+			</span>
+		</f:if>
+	</f:if>
+</f:section>
+
+<f:section name="Content">
+	<f:if condition="{themeIsSelectable}">
+		<f:then>
+			<f:if condition="{selectedTheme}">
+				<f:then>
+					<f:form action="saveCustomizedTheme" id="saveableForm">
+						<p>
+							<label>
+								<f:translate id="customizer.url.label"/>
+							</label>
+							<f:form.textfield id="customizerUrl" size="50" placeholder="{f:translate(id:'customizer.url.placeholder')}"/>
+						</p>
+						<f:form.hidden name="pid" value="{pid}" />
+						<f:for each="{themes:iterator.sort(subject: categories, key: 'title')}" as="category">
+							<f:for each="{themes:iterator.sort(subject: category.items)}" as="item" iteration="i">
+								<f:form.hidden name="check[{item.name}]" value="{f:if(condition:'{item.isDefault}', then:'', else:'checked')}" class="hidden"/>
+								<f:form.hidden name="data[{item.name}]" id="{tools:TextToIdForElement(text:item.name)}" value="{item.value}"/>
+
+								<f:if condition="{item.name} == 'themes.configuration.siteDomain'">
+									<f:if condition="{item.value} != ''">
+										<f:form.hidden id="siteDomain" value="http://{item.value}"/>
+									</f:if>
+								</f:if>
+							</f:for>
+						</f:for>
+					</f:form>
+					<div id="customizerIframeWrapper"></div>
+				</f:then>
+				<f:else>
+					<f:translate id="customizer.error"/>
+				</f:else>
+			</f:if>
+		</f:then>
+		<f:else>
+			<f:translate id="customizer.error"/>
+		</f:else>
+	</f:if>
+</f:section>

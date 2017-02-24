@@ -1,0 +1,27 @@
+<f:be.container
+		pageTitle="TYPO3-Customizer"
+		includeRequireJsModules="{
+			0: '../typo3conf/ext/t3kit_extension_tools/Resources/Public/JavaScript/CustomizerBackendModule.js'
+		}"
+		>
+	<div class="typo3-fullDoc">
+		<div id="typo3-docheader">
+			<div class="typo3-docheader-functions">
+				<div class="left">
+				</div>
+				<div class="right">
+					<f:be.pagePath /><f:be.pageInfo />
+				</div>
+			</div>
+			<div class="typo3-docheader-buttons">
+				<f:render section="Buttons" optional="1" />
+			</div>
+		</div>
+	</div>
+
+	<div id="typo3-docbody">
+		<div id="typo3-inner-docbody" class="typo3-themes-module">
+			<f:render section="Content" />
+		</div>
+	</div>
+</f:be.container>
