@@ -36,7 +36,6 @@ $EM_CONF[$_EXTKEY] = [
 		'depends' => [
 			'php'    => '5.5.0-7.0.99',
 			'typo3'  => '7.5.0-7.6.99',
-            'gridelements' => '8.0.0-dev',
 			'realurl' => ''
 		],
 		'conflicts' => [
